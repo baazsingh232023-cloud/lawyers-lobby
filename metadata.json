@@ -1,0 +1,6 @@
+{
+  "name": "Lawyer's Lobby",
+  "description": "India's Trusted Legal Marketplace (भारत का कानूनी मंच) connect with Bar Council verified lawyers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
