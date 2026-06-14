@@ -1,0 +1,29 @@
+workflows:
+  android-release:
+    name: Lawyers Lobby Release Build
+    max_build_duration: 60
+    environment:
+      android_signing:
+        - lawyers_lobby_keystore
+      vars:
+        PACKAGE_NAME: "com.aistudio.lawyerslobby.advktz"
+    scripts:
+      - name: Set up local properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+      - name: Build release APK
+        script: |
+          cd $CM_BUILD_DIR
+          ./gradlew assembleRelease \
+            -Pandroid.injected.signing.store.file=$CM_KEYSTORE_PATH \
+            -Pandroid.injected.signing.store.password=$CM_KEYSTORE_PASSWORD \
+            -Pandroid.injected.signing.key.alias=$CM_KEY_ALIAS \
+            -Pandroid.injected.signing.key.password=$CM_KEY_PASSWORD \
+            -x test
+    artifacts:
+      - app/build/outputs/**/*.apk
+      - app/build/outputs/**/*.aab
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
